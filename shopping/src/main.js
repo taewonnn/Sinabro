@@ -48,7 +48,7 @@ async function main() {
   `
   ).join('')
 
-  // 방법1
+  // 방법1 - 버튼마다 이벤트 붙여주기
   // Array.from(document.querySelectorAll('.btn-decrease')).forEach(button => {
   //   button.addEventListener('click', (event) => {
   //
@@ -56,7 +56,7 @@ async function main() {
   // })
   
   
-  // 방법2
+  // 방법2 - 전체를 가져오기
   document.querySelector('#products').addEventListener('click', (event) => {
     const targetElement = event.target;
 
