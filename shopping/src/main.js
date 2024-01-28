@@ -28,10 +28,12 @@ function findElement(startingElement, selector) {
 async function main() {
   console.log('💡', process.env.NODE_ENV);   // 💡 development
 
-  // if( process.env.NODE_ENV === 'development')
-
+  // 데이터
   const products = await getProducts();
   console.log('products', products)
+
+  // count 저장
+  const countMap = {};
 
   document.querySelector('#products').innerHTML = 
   products.map((product, index) => `
@@ -78,8 +80,15 @@ async function main() {
 
     if (targetElement.matches('.btn-decrease')) {
       console.log('decrease!');
+      if (countMap[productId] === undefined) {
+        countMap[productId] = 0;
+      }
     } else if (targetElement.matches('.btn-increase')) {
       console.log('increase!');
+      if (countMap[productId] === undefined) {
+        countMap[productId] = 0;
+      }
+      countMap[productId] += 1;
     }
   })
 
