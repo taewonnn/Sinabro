@@ -1,3 +1,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.cart-layer {
+    display: none;
+}
+
+.displaying_cart .cart-layer {
+    display: block;
+}
