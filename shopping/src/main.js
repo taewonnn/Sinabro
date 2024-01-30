@@ -122,13 +122,13 @@ async function main() {
             // - 눌렀을 때,
             if (targetElement.matches('.btn-decrease')) {
                 console.log('decrease!');
-                // countMap[productId] -= 1; -> 함수로 refactoring
+                // countMap[productId] -= 1;  -> 함수로 refactoring
                 decreaseCount(productId);
 
                 // + 눌렀을 때,
             } else if (targetElement.matches('.btn-increase')) {
                 console.log('increase!');
-                // countMap[productId] += 1; -> 함수로 refactoring
+                // countMap[productId] += 1;  -> 함수로 refactoring
                 increaseCount(productId);
             }
 
