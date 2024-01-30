@@ -61,6 +61,17 @@ async function main() {
     // 데이터
     const products = await getProducts();
     const productMap = {};
+
+    // 개수증가 함수
+    const increaseCount = (productId) => {
+        countMap[productId] += 1;
+    };
+
+    // 개수감소 함수
+    const decreaseCount = (productId) => {
+        countMap[productId] -= 1;
+    };
+
     products.forEach((product) => {
         productMap[product.id] = product;
     });
@@ -111,11 +122,14 @@ async function main() {
             // - 눌렀을 때,
             if (targetElement.matches('.btn-decrease')) {
                 console.log('decrease!');
-                countMap[productId] -= 1;
+                // countMap[productId] -= 1; -> 함수로 refactoring
+                decreaseCount(productId);
+
                 // + 눌렀을 때,
             } else if (targetElement.matches('.btn-increase')) {
                 console.log('increase!');
-                countMap[productId] += 1;
+                // countMap[productId] += 1; -> 함수로 refactoring
+                increaseCount(productId);
             }
 
             const cartCount = productElement.querySelector('.cart-count');
