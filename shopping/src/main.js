@@ -42,7 +42,7 @@ function sumAllCounts(countMap) {
 // 장바구니 담은 상품 HTML
 function getProductHTML(product, count = 0) {
     return `
-      <div class='product' data-product-id='${product.id}''>
+      <div class='product' data-product-id='${product.id}'>
         <img src='${product.images[0]}' alt='Image of ${product.name}' />
         <p>${product.name}</p>
         <div class='flex items-center justify-between'>
@@ -62,14 +62,54 @@ async function main() {
     const products = await getProducts();
     const productMap = {};
 
+    // count update
+    const updateProductCount = (productId) => {
+        const productElement = document.querySelector(`.product[data-product-id = '${productId}']`);
+        const cartCount = productElement.querySelector('.cart-count');
+        cartCount.innerHTML = countMap[productId];
+        if (countMap[productId] === 0) {
+            cartCount.innerHTML = '';
+        }
+    };
+
+    // 장바구니 내용물 업데이트 + Cart 옆 숫자 업데이트
+    const updateCart = () => {
+        const productIds = Object.keys(countMap);
+        console.log('💡product-id', productIds);
+
+        document.querySelector('.cart_items').innerHTML = productIds
+            .map((productId) => {
+                const productInCart = productMap[productId];
+                if (countMap[productId] === 0) {
+                    return '';
+                }
+                return getProductHTML(productInCart, countMap[productId]);
+            })
+            .join();
+
+        document.querySelector('.total_count').innerHTML = `(${sumAllCounts(countMap)})`;
+    };
+
     // 개수증가 함수
     const increaseCount = (productId) => {
+        if (countMap[productId] === undefined) {
+            countMap[productId] = 0;
+        }
+
         countMap[productId] += 1;
+        updateProductCount(productId);
+        updateCart();
     };
 
     // 개수감소 함수
     const decreaseCount = (productId) => {
+        if (countMap[productId] === undefined) {
+            countMap[productId] = 0;
+        }
+
         countMap[productId] -= 1;
+        updateProductCount(productId);
+        updateCart();
     };
 
     products.forEach((product) => {
@@ -95,10 +135,11 @@ async function main() {
     // + - 버튼 클릭 시
     document.querySelector('#products').addEventListener('click', (event) => {
         const targetElement = event.target;
+        // console.log('targetElement', targetElement);
 
         // 어떤 상품에서 버튼 클릭했는지 찾기!
         const productElement = findElement(targetElement, '.product');
-        // console.log(productElement);
+        // console.log('!fdfssfdf', productElement);
 
         // product id 가져오기
         const productId = productElement.getAttribute('data-product-id');
@@ -115,10 +156,6 @@ async function main() {
 
         // + - 버튼만 누르는게 아니라 이미지를 누를수도 있고 다른 것을 클릭 할 수 있으니,  + / -만 눌렀을 때로 범위 좁히기
         if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
-            if (countMap[productId] === undefined) {
-                countMap[productId] = 0;
-            }
-
             // - 눌렀을 때,
             if (targetElement.matches('.btn-decrease')) {
                 console.log('decrease!');
@@ -131,26 +168,37 @@ async function main() {
                 // countMap[productId] += 1;  -> 함수로 refactoring
                 increaseCount(productId);
             }
+        }
+    });
 
-            const cartCount = productElement.querySelector('.cart-count');
-            cartCount.innerHTML = countMap[productId];
-            if (countMap[productId] === 0) {
-                cartCount.innerHTML = '';
-            } else {
-                // 0이 아닐 때
-                const productIds = Object.keys(countMap);
-                console.log('💡product-id', productIds);
+    document.querySelector('.cart_items').addEventListener('click', () => {
+        // 위에 #products의 코드와 동일(반복)
+        const targetElement = event.target;
 
-                document.querySelector('.cart_items').innerHTML = productIds
-                    .map((productId) => {
-                        const productInCart = productMap[productId];
-                        return getProductHTML(productInCart, countMap[productId]);
-                    })
-                    .join();
+        // 어떤 상품에서 버튼 클릭했는지 찾기!
+        const productElement = findElement(targetElement, '.product');
+
+        // product id 가져오기
+        const productId = productElement.getAttribute('data-product-id');
+        const product = productMap[productId];
+
+        // product index 가져오기
+        const productIndex = productElement.getAttribute('data-product-index');
+
+        // + - 버튼만 누르는게 아니라 이미지를 누를수도 있고 다른 것을 클릭 할 수 있으니,  + / -만 눌렀을 때로 범위 좁히기
+        if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
+            // - 눌렀을 때,
+            if (targetElement.matches('.btn-decrease')) {
+                console.log('decrease!');
+                // countMap[productId] -= 1;  -> 함수로 refactoring
+                decreaseCount(productId);
+
+                // + 눌렀을 때,
+            } else if (targetElement.matches('.btn-increase')) {
+                console.log('increase!');
+                // countMap[productId] += 1;  -> 함수로 refactoring
+                increaseCount(productId);
             }
-
-            // console.log('!!!', document.querySelector('.total_count'));
-            document.querySelector('.total_count').innerHTML = `(${sumAllCounts(countMap)})`;
         }
     });
 
