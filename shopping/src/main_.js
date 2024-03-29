@@ -59,9 +59,41 @@ async function main() {
     // 개수 저장용
     const countMap = {};
 
+    // 장바구니 개수 업데이트
+    const updateViewsForCount = () => {
+        const cartCount = productElemnet.querySelector('.cart-count');
+        cartCount.innerHTML = countMap[productId];
+        if (countMap[productId] === 0) {
+            cartCount.innerHTML = '';
+        } else {
+            // 0이상이면 cart 목록에 보여주기
+            const productIds = Object.keys(countMap);
+            document.querySelector('.cart_items').innerHTML = productIds
+                .map((productId) => {
+                    const productInCart = productMap[productId];
+                    return getProductHTML(productInCart, countMap[productId]);
+                })
+                .join('');
+        }
+    };
+
     // 증가/감소 함수
-    const increaseCount = (productId) => {};
-    const decreaseCount = (productId) => {};
+    const increaseCount = (productId) => {
+        // countMap에 상품이 안담겨있다면 0
+        if (countMap[productId] === undefined) {
+            countMap[productId] = 0;
+        }
+        countMap[productId] += 1;
+        updateViewsForCount();
+    };
+    const decreaseCount = (productId) => {
+        // countMap에 상품이 안담겨있다면 0
+        if (countMap[productId] === undefined) {
+            countMap[productId] = 0;
+        }
+        countMap[productId] -= 1;
+        updateViewsForCount();
+    };
 
     // ‼️ Cart 보여주기용
     const productMap = {};
