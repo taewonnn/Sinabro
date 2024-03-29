@@ -59,6 +59,10 @@ async function main() {
     // 개수 저장용
     const countMap = {};
 
+    // 증가/감소 함수
+    const increaseCount = (productId) => {};
+    const decreaseCount = (productId) => {};
+
     // ‼️ Cart 보여주기용
     const productMap = {};
     products.forEach((product) => {
