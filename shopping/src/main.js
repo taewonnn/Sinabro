@@ -42,17 +42,17 @@ function sumAllCounts(countMap) {
 // 장바구니 담은 상품 HTML
 function getProductHTML(product, count = 0) {
     return `
-      <div class='product' data-product-id='${product.id}'>
-        <img src='${product.images[0]}' alt='Image of ${product.name}' />
-        <p>${product.name}</p>
-        <div class='flex items-center justify-between'>
-          <span>Price : ${product.regularPrice}</span>
-          <button type='button' class='btn-decrease disabled:cursor-not-allowed disabled:opacity-50 bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>-</button>
-          <span class='cart-count text-green-800'>${count === 0 ? '' : count}</span>
-          <button type='button' class='btn-increase bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>+</button>
+        <div class='product' data-product-id='${product.id}'>
+            <img src='${product.images[0]}' alt='Image of ${product.name}' />
+            <p>${product.name}</p>
+            <div class='flex items-center justify-between'>
+                <span>Price : ${product.regularPrice}</span>
+                <button type='button' class='btn-decrease disabled:cursor-not-allowed disabled:opacity-50 bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>-</button>
+                <span class='cart-count text-green-800'>${count === 0 ? '' : count}</span>
+                <button type='button' class='btn-increase bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>+</button>
+            </div>
         </div>
-      </div>
-  `;
+    `;
 }
 
 async function main() {
