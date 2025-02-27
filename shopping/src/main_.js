@@ -25,10 +25,12 @@ async function main() {
                 <div class="product">
                     <img src='${product.images[0]}' alt='Image of ${product.name}'/>
                     <p>${product.name}</p>
-                    <div>
+                    <div class="flex items-center justify-between">
                         <span>Price: ${product.regularPrice}</span>
-                        <button type="button" class="bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">-</button>
-                        <button type="button" class="bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
+                        <div>
+                            <button type="button" class="bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">-</button>
+                            <button type="button" class="bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
+                        </div>
                     </div>
                 </div>
             `
