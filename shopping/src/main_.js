@@ -28,15 +28,30 @@ async function main() {
                     <div class="flex items-center justify-between">
                         <span>Price: ${product.regularPrice}</span>
                         <div>
-                            <button type="button" class="bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">-</button>
+                            <button type="button" class="btn-decrease bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">-</button>
                             <span class="hidden text-green-800">3</span>
-                            <button type="button" class="bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
+                            <button type="button" class="btn-increase bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
                         </div>
                     </div>
                 </div>
             `
         )
         .join('');
+
+    // 방법1
+    Array.from(document.querySelectorAll('.btn-decrease')).forEach((button) => {
+        button.addEventListener('click', () => {});
+    });
+
+    // 방법2
+    document.querySelector('#products').addEventListener('click', (event) => {
+        const targetElement = event.target;
+        if (targetElement.matches('.btn-decrease')) {
+            console.log('decrease!!!');
+        } else if (targetElement.matches('.btn-increase')) {
+            console.log('increase!');
+        }
+    });
 }
 
 main();
