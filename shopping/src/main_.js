@@ -39,13 +39,18 @@ async function main() {
         .join('');
 
     // 방법1
-    Array.from(document.querySelectorAll('.btn-decrease')).forEach((button) => {
-        button.addEventListener('click', () => {});
-    });
+    // Array.from(document.querySelectorAll('.btn-decrease')).forEach((button) => {
+    //     button.addEventListener('click', () => {});
+    // });
 
     // 방법2
     document.querySelector('#products').addEventListener('click', (event) => {
         const targetElement = event.target;
+
+        // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함
+        // * 이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
+        const productElemnet = findElement(targetElement, '.product');
+
         if (targetElement.matches('.btn-decrease')) {
             console.log('decrease!!!');
         } else if (targetElement.matches('.btn-increase')) {
