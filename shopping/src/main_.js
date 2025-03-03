@@ -16,6 +16,16 @@ async function getProducts() {
     }
 }
 
+// 요소 찾는 함수
+function findElement(startingElement, selector) {
+    let currentElement = startingElement;
+    while (true) {
+        if (currentElement.matches(selector)) {
+            return currentElement;
+        }
+    }
+}
+
 async function main() {
     const products = await getProducts();
 
