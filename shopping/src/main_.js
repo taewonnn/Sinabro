@@ -19,11 +19,13 @@ async function getProducts() {
 // 요소 찾는 함수
 function findElement(startingElement, selector) {
     let currentElement = startingElement;
-    while (true) {
+    while (currentElement) {
         if (currentElement.matches(selector)) {
             return currentElement;
         }
+        currentElement = currentElement.parentElement;
     }
+    return null;
 }
 
 async function main() {
@@ -60,6 +62,9 @@ async function main() {
         // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함
         // * 이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
         const productElemnet = findElement(targetElement, '.product');
+
+        // console
+        console.log('find productElemnet: ', productElemnet);
 
         if (targetElement.matches('.btn-decrease')) {
             console.log('decrease!!!');
