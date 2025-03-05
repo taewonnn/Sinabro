@@ -34,7 +34,7 @@ async function main() {
     document.querySelector('#products').innerHTML = products
         .map(
             (product) => `
-                <div class="product">
+                <div class="product" data-product-id="${product.id}">
                     <img src='${product.images[0]}' alt='Image of ${product.name}'/>
                     <p>${product.name}</p>
                     <div class="flex items-center justify-between">
