@@ -62,9 +62,12 @@ async function main() {
         // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함
         // * 이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
         const productElemnet = findElement(targetElement, '.product');
-
         // console
-        console.log('find productElemnet: ', productElemnet);
+        // console.log('find productElemnet: ', productElemnet);
+
+        // product 요소 가져온거에서 Id추출
+        const productId = productElemnet.getAttribute('data-product-id');
+        console.log('+/- click한 상품 번호', productId);
 
         if (targetElement.matches('.btn-decrease')) {
             console.log('decrease!!!');
