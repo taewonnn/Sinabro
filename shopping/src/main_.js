@@ -33,8 +33,8 @@ async function main() {
 
     document.querySelector('#products').innerHTML = products
         .map(
-            (product) => `
-                <div class="product" data-product-id="${product.id}">
+            (product, index) => `
+                <div class="product" data-product-id="${product.id}" data-product-index="${index}">
                     <img src='${product.images[0]}' alt='Image of ${product.name}'/>
                     <p>${product.name}</p>
                     <div class="flex items-center justify-between">
@@ -50,17 +50,11 @@ async function main() {
         )
         .join('');
 
-    // 방법1
-    // Array.from(document.querySelectorAll('.btn-decrease')).forEach((button) => {
-    //     button.addEventListener('click', () => {});
-    // });
-
-    // 방법2
+    // 상품 추가 제외 버튼 클릭 시
     document.querySelector('#products').addEventListener('click', (event) => {
         const targetElement = event.target;
 
-        // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함
-        // * 이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
+        // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함    *이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
         const productElemnet = findElement(targetElement, '.product');
         // console
         // console.log('find productElemnet: ', productElemnet);
@@ -68,6 +62,10 @@ async function main() {
         // product 요소 가져온거에서 Id추출
         const productId = productElemnet.getAttribute('data-product-id');
         console.log('+/- click한 상품 번호', productId);
+
+        // products에서 클릭한 상품의 Index로 정보 가져오기
+        const productIndex = productElemnet.getAttribute('data-product-index');
+        console.log('+/- click한 상품 정보', products[productIndex]);
 
         if (targetElement.matches('.btn-decrease')) {
             console.log('decrease!!!');
