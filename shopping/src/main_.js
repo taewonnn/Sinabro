@@ -44,7 +44,7 @@ async function main() {
                         <span>Price: ${product.regularPrice}</span>
                         <div>
                             <button type="button" disabled class="btn-decrease bg-green-200 hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-50 py-1 px-3 rounded-full text-green-800 ">-</button>
-                            <span class="hidden text-green-800">3</span>
+                            <span class="cart-count text-green-800"></span>
                             <button type="button" class="btn-increase bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
                         </div>
                     </div>
@@ -56,6 +56,9 @@ async function main() {
     // 상품 추가 제외 버튼 클릭 시
     document.querySelector('#products').addEventListener('click', (event) => {
         const targetElement = event.target;
+
+        // console
+        console.log('target:', targetElement);
 
         // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함    *이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
         const productElemnet = findElement(targetElement, '.product');
@@ -70,19 +73,33 @@ async function main() {
         const productIndex = productElemnet.getAttribute('data-product-index');
         console.log('+/- click한 상품 정보', products[productIndex]);
 
-        if (targetElement.matches('.btn-decrease')) {
-            // - 클릭 시
+        // + / - 버튼 클릭 시
+        if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
+            // countMap에 상품이 안담겨있다면 0
             if (countMap[productId] === undefined) {
                 countMap[productId] = 0;
             }
 
-            countMap[productId] -= 1;
-        } else if (targetElement.matches('.btn-increase')) {
-            // + 클릭 시
-            if (countMap[productId] === undefined) {
-                countMap[productId] = 0;
+            if (targetElement.matches('.btn-decrease')) {
+                // - 클릭 시
+                if (countMap[productId] === 0) return;
+                countMap[productId] -= 1;
+            } else if (targetElement.matches('.btn-increase')) {
+                countMap[productId] += 1;
             }
-            countMap[productId] += 1;
+
+            const cartCount = productElemnet.querySelector('.cart-count');
+            cartCount.innerHTML = countMap[productId] > 0 ? countMap[productId] : '';
+
+            // - 버튼
+            const btnDecrease = productElemnet.querySelector('.btn-decrease');
+
+            // 수량이 0 이상 -> 버튼 활성화
+            if (countMap[productId] > 0) {
+                btnDecrease.removeAttribute('disabled');
+            } else if (countMap[productId] == '') {
+                btnDecrease.setAttribute('disabled', true);
+            }
         }
     });
 }
