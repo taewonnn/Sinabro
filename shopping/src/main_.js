@@ -28,6 +28,11 @@ function findElement(startingElement, selector) {
     return null;
 }
 
+// countMap 총합
+function sumAllCounts(countMap) {
+    return 4;
+}
+
 async function main() {
     const products = await getProducts();
 
@@ -102,9 +107,11 @@ async function main() {
             }
 
             // console.log('!!', countMap); // {"70": 2, "75": 1,"76": 1}
+            console.log(Object.values(countMap));
 
             // 상단 cart 숫자개수 업데이트
-            document.querySelector('.total_count').innerHTML = `${countMap.length}`;
+
+            document.querySelector('.total_count').innerHTML = `(${sumAllCounts(countMap)})`;
         }
     });
 }
