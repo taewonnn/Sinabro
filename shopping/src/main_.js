@@ -100,6 +100,11 @@ async function main() {
             } else if (countMap[productId] == '') {
                 btnDecrease.setAttribute('disabled', true);
             }
+
+            // console.log('!!', countMap); // {"70": 2, "75": 1,"76": 1}
+
+            // 상단 cart 숫자개수 업데이트
+            document.querySelector('.total_count').innerHTML = `${countMap.length}`;
         }
     });
 }
