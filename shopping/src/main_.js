@@ -28,9 +28,14 @@ function findElement(startingElement, selector) {
     return null;
 }
 
-// countMap 총합
+// countMap 총합 - 장바구니 옆 숫자
 function sumAllCounts(countMap) {
-    return 4;
+    let sum = 0;
+    Object.values(countMap).forEach((number) => {
+        sum += number;
+    });
+
+    return sum;
 }
 
 async function main() {
