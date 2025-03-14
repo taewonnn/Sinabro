@@ -30,12 +30,10 @@ function findElement(startingElement, selector) {
 
 // countMap 총합 - 장바구니 옆 숫자
 function sumAllCounts(countMap) {
-    let sum = 0;
-    Object.values(countMap).forEach((number) => {
-        sum += number;
-    });
-
-    return sum;
+    return Object.values(countMap).reduce((total, current) => {
+        total += current;
+        return total;
+    }, 0);
 }
 
 async function main() {
@@ -115,7 +113,6 @@ async function main() {
             console.log(Object.values(countMap));
 
             // 상단 cart 숫자개수 업데이트
-
             document.querySelector('.total_count').innerHTML = `(${sumAllCounts(countMap)})`;
         }
     });
