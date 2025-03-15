@@ -116,6 +116,17 @@ async function main() {
             document.querySelector('.total_count').innerHTML = `(${sumAllCounts(countMap)})`;
         }
     });
+
+    // cart 클릭 시 장바구니 목록 노출
+    document.querySelector('.btn-cart').addEventListener('click', () => {
+        // document.querySelector('.cart-layer').style.display = 'block';
+        document.body.classList.add('displaying_cart');
+    });
+
+    // 장바구니 목록 close 버튼 클릭 시
+    document.querySelector('.btn-close-cart').addEventListener('click', () => {
+        document.body.classList.remove('displaying_cart');
+    });
 }
 
 main();
