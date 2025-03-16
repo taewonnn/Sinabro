@@ -36,30 +36,36 @@ function sumAllCounts(countMap) {
     }, 0);
 }
 
+function getProductHTML(product) {
+    return `
+        <div class="product" data-product-id="${product.id}">
+            <img src='${product.images[0]}' alt='Image of ${product.name}'/>
+            <p>${product.name}</p>
+            <div class="flex items-center justify-between">
+                <span>Price: ${product.regularPrice}</span>
+                <div>
+                    <button type="button" disabled class="btn-decrease bg-green-200 hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-50 py-1 px-3 rounded-full text-green-800 ">-</button>
+                    <span class="cart-count text-green-800"></span>
+                    <button type="button" class="btn-increase bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 async function main() {
     const products = await getProducts();
 
     // 개수 저장용
     const countMap = {};
 
-    document.querySelector('#products').innerHTML = products
-        .map(
-            (product, index) => `
-                <div class="product" data-product-id="${product.id}" data-product-index="${index}">
-                    <img src='${product.images[0]}' alt='Image of ${product.name}'/>
-                    <p>${product.name}</p>
-                    <div class="flex items-center justify-between">
-                        <span>Price: ${product.regularPrice}</span>
-                        <div>
-                            <button type="button" disabled class="btn-decrease bg-green-200 hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-50 py-1 px-3 rounded-full text-green-800 ">-</button>
-                            <span class="cart-count text-green-800"></span>
-                            <button type="button" class="btn-increase bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
-                        </div>
-                    </div>
-                </div>
-            `
-        )
-        .join('');
+    // ‼️ Cart 보여주기용
+    const productMap = {};
+    products.forEach((product) => {
+        productMap[product.id] = product;
+    });
+
+    document.querySelector('#products').innerHTML = products.map((product) => getProductHTML(product)).join('');
 
     // 상품 추가 제외 버튼 클릭 시
     document.querySelector('#products').addEventListener('click', (event) => {
@@ -77,9 +83,9 @@ async function main() {
         const productId = productElemnet.getAttribute('data-product-id');
         console.log('+/- click한 상품 번호', productId);
 
-        // products에서 클릭한 상품의 Index로 정보 가져오기
-        const productIndex = productElemnet.getAttribute('data-product-index');
-        console.log('+/- click한 상품 정보', products[productIndex]);
+        // product 정보 찾기
+        // const product = products.find((product) => product.id === productId);
+        const product = productMap[productId];
 
         // + / - 버튼 클릭 시
         if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
@@ -97,7 +103,19 @@ async function main() {
             }
 
             const cartCount = productElemnet.querySelector('.cart-count');
-            cartCount.innerHTML = countMap[productId] > 0 ? countMap[productId] : '';
+            cartCount.innerHTML = countMap[productId];
+            if (countMap[productId] === 0) {
+                cartCount.innerHTML = '';
+            } else {
+                // 0이상이면 cart 목록에 보여주기
+                const productIds = Object.keys(countMap);
+                document.querySelector('.cart_items').innerHTML = productIds
+                    .map((productId) => {
+                        const productInCart = productMap[productId];
+                        return getProductHTML(productInCart);
+                    })
+                    .join('');
+            }
 
             // - 버튼
             const btnDecrease = productElemnet.querySelector('.btn-decrease');
@@ -125,6 +143,11 @@ async function main() {
 
     // 장바구니 목록 close 버튼 클릭 시
     document.querySelector('.btn-close-cart').addEventListener('click', () => {
+        document.body.classList.remove('displaying_cart');
+    });
+
+    // 바깥 화면 클릭 시 닫힘 처리
+    document.querySelector('.cart-dimmed-bg').addEventListener('click', () => {
         document.body.classList.remove('displaying_cart');
     });
 }
