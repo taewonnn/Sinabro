@@ -174,6 +174,38 @@ async function main() {
         }
     });
 
+    // cart 목록에서 상품리스트 보여주기
+    document.querySelector('.cart_items').addEventListener('click', (event) => {
+        const targetElement = event.target;
+
+        // console
+        console.log('target:', targetElement);
+
+        // .product 요소 위까지 올라가서 어떤 상품에서 + / - 버튼을 눌렀는지 체크해야 함    *이게 없다면 없다면 어느 상품을 추가/삭제했는지 식별 불가
+        const productElemnet = findElement(targetElement, '.product');
+        // console
+        // console.log('find productElemnet: ', productElemnet);
+
+        // product 요소 가져온거에서 Id추출
+        const productId = productElemnet.getAttribute('data-product-id');
+        console.log('+/- click한 상품 번호', productId);
+
+        // product 정보 찾기
+        // const product = products.find((product) => product.id === productId);
+        const product = productMap[productId];
+
+        // + / - 버튼 클릭 시
+        if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
+            if (targetElement.matches('.btn-decrease')) {
+                // - 클릭 시
+                decreaseCount(productId);
+            } else if (targetElement.matches('.btn-increase')) {
+                // + 클릭 시
+                increaseCount(productId);
+            }
+        }
+    });
+
     // cart 클릭 시 장바구니 목록 노출
     document.querySelector('.btn-cart').addEventListener('click', () => {
         // document.querySelector('.cart-layer').style.display = 'block';
