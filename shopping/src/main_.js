@@ -44,7 +44,7 @@ function getProductHTML(product, count = 0) {
             <div class="flex items-center justify-between">
                 <span>Price: ${product.regularPrice}</span>
                 <div>
-                    <button type="button" disabled class="btn-decrease bg-green-200 hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-50 py-1 px-3 rounded-full text-green-800 ">-</button>
+                    <button type="button" class="btn-decrease bg-green-200 hover:bg-green-300  py-1 px-3 rounded-full text-green-800 ">-</button>
                     <span class="cart-count text-green-800">${count === 0 ? '' : count}</span>
                     <button type="button" class="btn-increase bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
                 </div>
@@ -160,17 +160,17 @@ async function main() {
             }
 
             // - 버튼
-            const btnDecrease = productElemnet.querySelector('.btn-decrease');
+            // const btnDecrease = productElemnet.querySelector('.btn-decrease');
 
-            // 수량이 0 이상 -> 버튼 활성화
-            if (countMap[productId] > 0) {
-                btnDecrease.removeAttribute('disabled');
-            } else if (countMap[productId] == '') {
-                btnDecrease.setAttribute('disabled', true);
-            }
+            // // 수량이 0 이상 -> 버튼 활성화
+            // if (countMap[productId] > 0) {
+            //     btnDecrease.removeAttribute('disabled');
+            // } else if (countMap[productId] == '') {
+            //     btnDecrease.setAttribute('disabled', true);
+            // }
 
-            // console.log('!!', countMap); // {"70": 2, "75": 1,"76": 1}
-            console.log(Object.values(countMap));
+            // // console.log('!!', countMap); // {"70": 2, "75": 1,"76": 1}
+            // console.log(Object.values(countMap));
         }
     });
 
