@@ -120,9 +120,7 @@ async function main() {
     // count 저장
     const countMap = {};
 
-    document.querySelector('#products').innerHTML = products
-        .map((product, index) => getProductHTML(product))
-        .join('');
+    document.querySelector('#products').innerHTML = products.map((product, index) => getProductHTML(product)).join('');
 
     // 방법1 - 버튼마다 이벤트 붙여주기
     // Array.from(document.querySelectorAll('.btn-decrease')).forEach(button => {

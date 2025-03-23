@@ -1,8 +1,15 @@
-import { getProductHTML, setupProducts } from '../../vite/vite-project/products';
-import { setupCounter } from '../../vite/vite-project/counter';
-import { setupCart } from './cart';
-
 // https://learnwitheunjae.dev/api/sinabro-js/ecommerce
+
+import test from '/src/test.json?raw';
+
+async function getProducts() {
+    if (process.env.NODE_ENV === 'development') {
+        return JSON.parse(test);
+    } else {
+        const response = await fetch('https://learnwitheunjae.dev/api/sinabro-js/ecommerce');
+        return await response.json();
+    }
+}
 
 // decrease / increase 눌렀는데 어떤 상품을 누른 건지 알아야 하기위해!
 // 어떤 상품인지 찾는 함수
@@ -32,18 +39,38 @@ function sumAllCounts(countMap) {
     }, 0);
 }
 
+// 장바구니 담은 상품 HTML
+function getProductHTML(product, count = 0) {
+    return `
+        <div class='product' data-product-id='${product.id}'>
+            <img src='${product.images[0]}' alt='Image of ${product.name}' />
+            <p>${product.name}</p>
+            <div class='flex items-center justify-between'>
+                <span>Price : ${product.regularPrice}</span>
+                <button type='button' class='btn-decrease disabled:cursor-not-allowed disabled:opacity-50 bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>-</button>
+                <span class='cart-count text-green-800'>${count === 0 ? '' : count}</span>
+                <button type='button' class='btn-increase bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>+</button>
+            </div>
+        </div>
+    `;
+}
+
 async function main() {
-    // setupProducts : 상품 리스트 셋팅하는 함수
-    const { updateCount } = await setupProducts({
-        container: document.querySelector('#products'),
-    });
-    // console.log('💡', process.env.NODE_ENV); // 💡 development
+    console.log('💡', process.env.NODE_ENV); // 💡 development
 
-    setupCart({ container: document.querySelector('.cart_items') });
+    // 데이터
+    const products = await getProducts();
+    const productMap = {};
 
-    // count 저장
-    const countMap = {};
-    setupCounter();
+    // count update
+    const updateProductCount = (productId) => {
+        const productElement = document.querySelector(`.product[data-product-id = '${productId}']`);
+        const cartCount = productElement.querySelector('.cart-count');
+        cartCount.innerHTML = countMap[productId];
+        if (countMap[productId] === 0) {
+            cartCount.innerHTML = '';
+        }
+    };
 
     // 장바구니 내용물 업데이트 + Cart 옆 숫자 업데이트
     const updateCart = () => {
@@ -70,7 +97,7 @@ async function main() {
         }
 
         countMap[productId] += 1;
-        updateCount({ productId, count });
+        updateProductCount(productId);
         updateCart();
     };
 
@@ -81,9 +108,19 @@ async function main() {
         }
 
         countMap[productId] -= 1;
-        updateCount({ productId, count });
+        updateProductCount(productId);
         updateCart();
     };
+
+    products.forEach((product) => {
+        productMap[product.id] = product;
+    });
+    console.log('products', products);
+
+    // count 저장
+    const countMap = {};
+
+    document.querySelector('#products').innerHTML = products.map((product, index) => getProductHTML(product)).join('');
 
     // 방법1 - 버튼마다 이벤트 붙여주기
     // Array.from(document.querySelectorAll('.btn-decrease')).forEach(button => {
