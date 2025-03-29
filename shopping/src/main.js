@@ -55,12 +55,22 @@ function getProductHTML(product, count = 0) {
     `;
 }
 
-async function main() {
-    console.log('💡', process.env.NODE_ENV); // 💡 development
-
-    // 데이터
+async function setupProducts() {
+    // GET data
     const products = await getProducts();
     const productMap = {};
+    products.forEach((product) => {
+        productMap[product.id] = product;
+    });
+
+    // console
+    console.log('products', products);
+}
+
+async function main() {
+    await setupProducts();
+
+    // console.log('💡', process.env.NODE_ENV); // 💡 development
 
     // count update
     const updateProductCount = (productId) => {
@@ -111,11 +121,6 @@ async function main() {
         updateProductCount(productId);
         updateCart();
     };
-
-    products.forEach((product) => {
-        productMap[product.id] = product;
-    });
-    console.log('products', products);
 
     // count 저장
     const countMap = {};
