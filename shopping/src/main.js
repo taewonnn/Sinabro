@@ -55,7 +55,7 @@ function getProductHTML(product, count = 0) {
     `;
 }
 
-async function setupProducts() {
+async function setupProducts({ container }) {
     // GET data
     const products = await getProducts();
     const productMap = {};
@@ -65,22 +65,28 @@ async function setupProducts() {
 
     // console
     console.log('products', products);
-}
 
-async function main() {
-    await setupProducts();
+    // 리스트 렌더링
+    document.querySelector('#products').innerHTML = products.map((product, index) => getProductHTML(product)).join('');
 
-    // console.log('💡', process.env.NODE_ENV); // 💡 development
-
-    // count update
-    const updateProductCount = (productId) => {
-        const productElement = document.querySelector(`.product[data-product-id = '${productId}']`);
+    // 개수 update
+    const updateCount = ({ productId, count }) => {
+        const productElement = container.querySelector(`.product[data-product-id = '${productId}']`);
         const cartCount = productElement.querySelector('.cart-count');
-        cartCount.innerHTML = countMap[productId];
+        cartCount.innerHTML = count;
         if (countMap[productId] === 0) {
             cartCount.innerHTML = '';
         }
     };
+
+    return { updateCount };
+}
+
+async function main() {
+    // console.log('💡', process.env.NODE_ENV); // 💡 development
+    const { updateCount } = await setupProducts({
+        container: document.querySelector('#prodcuts'),
+    });
 
     // 장바구니 내용물 업데이트 + Cart 옆 숫자 업데이트
     const updateCart = () => {
@@ -107,7 +113,7 @@ async function main() {
         }
 
         countMap[productId] += 1;
-        updateProductCount(productId);
+        updateCount({ productId, count: countMap[productId] });
         updateCart();
     };
 
@@ -118,14 +124,12 @@ async function main() {
         }
 
         countMap[productId] -= 1;
-        updateProductCount(productId);
+        updateCount({ productId, count: countMap[productId] });
         updateCart();
     };
 
     // count 저장
     const countMap = {};
-
-    document.querySelector('#products').innerHTML = products.map((product, index) => getProductHTML(product)).join('');
 
     // 방법1 - 버튼마다 이벤트 붙여주기
     // Array.from(document.querySelectorAll('.btn-decrease')).forEach(button => {
