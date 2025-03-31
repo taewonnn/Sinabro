@@ -35,6 +35,8 @@ async function main() {
 
     setupCounter();
 
+    setupdateCart({ container: document.querySelector('#.cart_items') });
+
     // 장바구니 내용물 업데이트 + Cart 옆 숫자 업데이트
     const updateCart = () => {
         const productIds = Object.keys(countMap);

@@ -10,8 +10,11 @@ async function getProducts() {
 }
 
 // 장바구니 담은 상품 HTML
-export function getProductHTML(product, count = 0) {
-    return `
+export function getProductElement(product, count = 0) {
+    const element = document.createElement('div');
+    element.classList.add('product');
+    element.setAttribute('data-product-id', product.id);
+    element.innerHTML = `
         <div class='product' data-product-id='${product.id}'>
             <img src='${product.images[0]}' alt='Image of ${product.name}' />
             <p>${product.name}</p>
@@ -22,7 +25,8 @@ export function getProductHTML(product, count = 0) {
                 <button type='button' class='btn-increase bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>+</button>
             </div>
         </div>
-    `;
+        `;
+    return element;
 }
 
 export async function setupProducts({ container }) {
