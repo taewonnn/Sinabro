@@ -1,6 +1,6 @@
 // https://learnwitheunjae.dev/api/sinabro-js/ecommerce
 
-import { setupProducts, getProductHTML } from './products';
+import { setupProducts, getProductElement } from './products';
 
 // decrease / increase 눌렀는데 어떤 상품을 누른 건지 알아야 하기위해!
 // 어떤 상품인지 찾는 함수
@@ -48,7 +48,7 @@ async function main() {
                 if (countMap[productId] === 0) {
                     return '';
                 }
-                return getProductHTML(productInCart, countMap[productId]);
+                return getProductElement(productInCart, countMap[productId]);
             })
             .join();
 

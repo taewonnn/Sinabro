@@ -1,3 +1,5 @@
+import { getProductElement } from './products';
+
 export function setupCart({ container }) {
     // add Procut
     const addProduct = ({ product }) => {

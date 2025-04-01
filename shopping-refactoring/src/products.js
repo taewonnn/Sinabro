@@ -1,5 +1,6 @@
 import test from '/src/test.json?raw';
 
+/** 상품 정보 API */
 async function getProducts() {
     if (process.env.NODE_ENV === 'development') {
         return JSON.parse(test);
@@ -9,7 +10,7 @@ async function getProducts() {
     }
 }
 
-// 장바구니 담은 상품 HTML
+/** 담긴 상품 HTML */
 export function getProductElement(product, count = 0) {
     const element = document.createElement('div');
     element.classList.add('product');
@@ -36,10 +37,13 @@ export async function setupProducts({ container }) {
     products.forEach((product) => {
         productMap[product.id] = product;
     });
+    // console
+    // console.log('products', products);
 
-    console.log('products', products);
-
-    document.querySelector('#products').innerHTML = products.map((product, index) => getProductHTML(product)).join('');
+    products.forEach((product) => {
+        const productElement = getProductElement(product);
+        container.appendChild(productElement);
+    });
 
     // count update
     const updateCount = ({ productId, count }) => {
