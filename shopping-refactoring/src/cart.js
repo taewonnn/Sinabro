@@ -3,7 +3,7 @@ import { getProductElement } from './products';
 export function setupCart({ container }) {
     // add Procut
     const addProduct = ({ product }) => {
-        const productElement = document.createElement('div');
+        const productElement = getProductElement(product);
         container.appenChild(productElemnet);
     };
 
@@ -13,7 +13,15 @@ export function setupCart({ container }) {
     };
     productElement.rmove();
 
-    return { removeProduct };
+    // count update
+    const updateCount = ({ productId, count }) => {
+        const productElement = container.querySelector(`.product[data-product-id = '${productId}']`);
+        const cartCount = productElement.querySelector('.cart-count');
+        cartCount.innerHTML = count;
+        if (count === 0) {
+            cartCount.innerHTML = '';
+        }
+    };
 
-    // updateCount
+    return { addProduct, removeProduct, updateCount };
 }
