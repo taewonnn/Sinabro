@@ -1,5 +1,6 @@
 // https://learnwitheunjae.dev/api/sinabro-js/ecommerce
 
+import { setupCart } from './cart';
 import { setupProducts, getProductElement } from './products';
 
 // decrease / increase 눌렀는데 어떤 상품을 누른 건지 알아야 하기위해!
@@ -31,11 +32,11 @@ function sumAllCounts(countMap) {
 }
 
 async function main() {
-    const { updateCount } = await setupProducts({ container: document.querySelector('#products') });
+    const { updateCount: updateProductCount } = await setupProducts({ container: document.querySelector('#products') });
 
     setupCounter();
 
-    setupdateCart({ container: document.querySelector('#.cart_items') });
+    const { addProduct, removeProduct, updateCount: updateCartCount } = setupCart({ container: document.querySelector('#.cart_items') });
 
     // 장바구니 내용물 업데이트 + Cart 옆 숫자 업데이트
     const updateCart = () => {
