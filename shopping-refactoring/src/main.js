@@ -63,8 +63,8 @@ async function main() {
         }
 
         countMap[productId] += 1;
-        updateCount({ productId, count: countMap[productId] });
-        updateCart();
+        updateProductCount({ productId, count: countMap[productId] });
+        updateCartCount({ productId, count: countMap[productId] });
     };
 
     // 개수감소 함수
@@ -74,8 +74,8 @@ async function main() {
         }
 
         countMap[productId] -= 1;
-        updateCount({ productId, count: countMap[productId] });
-        updateCart();
+        updateProductCount({ productId, count: countMap[productId] });
+        updateCartCount({ productId, count: countMap[productId] });
     };
 
     // count 저장
