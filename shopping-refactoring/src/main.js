@@ -1,6 +1,7 @@
 // https://learnwitheunjae.dev/api/sinabro-js/ecommerce
 
 import { setupCart } from './cart';
+import { setupCounter } from './counter';
 import { setupProducts, getProductElement } from './products';
 
 // decrease / increase 눌렀는데 어떤 상품을 누른 건지 알아야 하기위해!
@@ -33,53 +34,31 @@ function sumAllCounts(countMap) {
 
 async function main() {
     const { updateCount: updateProductCount } = await setupProducts({ container: document.querySelector('#products') });
+    let productMap = {};
 
-    setupCounter();
+    const { increase, decrease } = setupCounter();
 
-    const { addProduct, removeProduct, updateCount: updateCartCount } = setupCart({ container: document.querySelector('#.cart_items') });
+    const { addProduct, removeProduct, updateCount: updateCartCount } = setupCart({ container: document.querySelector('.cart_items') });
 
-    // 장바구니 내용물 업데이트 + Cart 옆 숫자 업데이트
-    const updateCart = () => {
-        const productIds = Object.keys(countMap);
-        console.log('💡product-id', productIds);
-
-        document.querySelector('.cart_items').innerHTML = productIds
-            .map((productId) => {
-                const productInCart = productMap[productId];
-                if (countMap[productId] === 0) {
-                    return '';
-                }
-                return getProductElement(productInCart, countMap[productId]);
-            })
-            .join();
-
-        document.querySelector('.total_count').innerHTML = `(${sumAllCounts(countMap)})`;
-    };
+    // count 저장
+    const countMap = {};
 
     // 개수증가 함수
     const increaseCount = (productId) => {
-        if (countMap[productId] === undefined) {
-            countMap[productId] = 0;
-        }
+        // counter.js 에서 미리 정의해놓은 increase
+        const count = increase({ productId });
 
-        countMap[productId] += 1;
-        updateProductCount({ productId, count: countMap[productId] });
-        updateCartCount({ productId, count: countMap[productId] });
+        updateProductCount({ productId, count: count });
+        updateCartCount({ productId, count: count });
     };
 
     // 개수감소 함수
     const decreaseCount = (productId) => {
-        if (countMap[productId] === undefined) {
-            countMap[productId] = 0;
-        }
-
-        countMap[productId] -= 1;
+        // counter.js 에서 미리 정의해놓은 decrease
+        const count = decrease({ productId });
         updateProductCount({ productId, count: countMap[productId] });
         updateCartCount({ productId, count: countMap[productId] });
     };
-
-    // count 저장
-    const countMap = {};
 
     // 방법1 - 버튼마다 이벤트 붙여주기
     // Array.from(document.querySelectorAll('.btn-decrease')).forEach(button => {
@@ -121,7 +100,7 @@ async function main() {
 
                 // + 눌렀을 때,
             } else if (targetElement.matches('.btn-increase')) {
-                console.log('increase!');
+                // console.log('increase!');
                 // countMap[productId] += 1;  -> 함수로 refactoring
                 increaseCount(productId);
             }
