@@ -37,9 +37,7 @@ export async function setupProducts({ container }) {
     products.forEach((product) => {
         productMap[product.id] = product;
     });
-    // console
-    // console.log('products', products);
-
+    
     products.forEach((product) => {
         const productElement = getProductElement(product);
         container.appendChild(productElement);
