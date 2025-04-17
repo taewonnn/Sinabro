@@ -36,7 +36,7 @@ function sumAllCounts(countMap) {
     }, 0);
 }
 
-function getProductHTML(product) {
+function getProductHTML(product, count = 0) {
     return `
         <div class="product" data-product-id="${product.id}">
             <img src='${product.images[0]}' alt='Image of ${product.name}'/>
@@ -45,7 +45,7 @@ function getProductHTML(product) {
                 <span>Price: ${product.regularPrice}</span>
                 <div>
                     <button type="button" disabled class="btn-decrease bg-green-200 hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-50 py-1 px-3 rounded-full text-green-800 ">-</button>
-                    <span class="cart-count text-green-800"></span>
+                    <span class="cart-count text-green-800">${count === 0 ? '' : count}</span>
                     <button type="button" class="btn-increase bg-green-200 hover:bg-green-300 py-1 px-3 rounded-full text-green-800 ">+</button>
                 </div>
             </div>
@@ -112,7 +112,7 @@ async function main() {
                 document.querySelector('.cart_items').innerHTML = productIds
                     .map((productId) => {
                         const productInCart = productMap[productId];
-                        return getProductHTML(productInCart);
+                        return getProductHTML(productInCart, countMap[productId]);
                     })
                     .join('');
             }
