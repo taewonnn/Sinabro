@@ -56,18 +56,10 @@ async function main() {
     const decreaseCount = (productId) => {
         // counter.js 에서 미리 정의해놓은 decrease
         const count = decrease({ productId });
-        updateProductCount({ productId, count: countMap[productId] });
-        updateCartCount({ productId, count: countMap[productId] });
+        updateProductCount({ productId, count: count });
+        updateCartCount({ productId, count: count });
     };
 
-    // 방법1 - 버튼마다 이벤트 붙여주기
-    // Array.from(document.querySelectorAll('.btn-decrease')).forEach(button => {
-    //   button.addEventListener('click', (event) => {
-    //
-    //   })
-    // })
-
-    // 방법2 - 전체를 가져오기
     // + - 버튼 클릭 시
     document.querySelector('#products').addEventListener('click', (event) => {
         const targetElement = event.target;
