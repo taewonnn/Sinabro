@@ -4,7 +4,7 @@ export function setupCart({ container }) {
     // add Procut
     const addProduct = ({ product }) => {
         const productElement = getProductElement(product);
-        container.appenChild(productElement);
+        container.appendChild(productElement);
     };
 
     // remove product
@@ -16,7 +16,6 @@ export function setupCart({ container }) {
     // count update
     const updateCount = ({ productId, count }) => {
         const productElement = container.querySelector(`.product[data-product-id='${productId}']`);
-        console.log('update product', productElement);
         const cartCount = productElement.querySelector('.cart-count');
         cartCount.innerHTML = count;
         if (count === 0) {
