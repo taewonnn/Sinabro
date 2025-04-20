@@ -33,7 +33,7 @@ function sumAllCounts(countMap) {
 }
 
 async function main() {
-    const { updateCount: updateProductCount } = await setupProducts({ container: document.querySelector('#products') });
+    const { updateCount: updateProductCount, getProductById } = await setupProducts({ container: document.querySelector('#products') });
     let productMap = {};
 
     const { increase, decrease } = setupCounter();
@@ -47,8 +47,12 @@ async function main() {
     const increaseCount = (productId) => {
         // counter.js 에서 미리 정의해놓은 increase
         const count = increase({ productId });
+        console.log('product', getProductById({ productId }));
 
         updateProductCount({ productId, count: count });
+        if (count === 1) {
+            addProduct({ product: getProductById({ productId }) });
+        }
         updateCartCount({ productId, count: count });
     };
 
@@ -63,11 +67,9 @@ async function main() {
     // + - 버튼 클릭 시
     document.querySelector('#products').addEventListener('click', (event) => {
         const targetElement = event.target;
-        // console.log('targetElement', targetElement);
 
         // 어떤 상품에서 버튼 클릭했는지 찾기!
         const productElement = findElement(targetElement, '.product');
-        // console.log('!fdfssfdf', productElement);
 
         // product id 가져오기
         const productId = productElement.getAttribute('data-product-id');
