@@ -37,7 +37,7 @@ export async function setupProducts({ container }) {
     products.forEach((product) => {
         productMap[product.id] = product;
     });
-    
+
     products.forEach((product) => {
         const productElement = getProductElement(product);
         container.appendChild(productElement);
@@ -53,5 +53,10 @@ export async function setupProducts({ container }) {
         }
     };
 
-    return { updateCount };
+    // id에 맞는 Product
+    const getProductById = ({ productId }) => {
+        return productMap[productId];
+    };
+
+    return { updateCount, getProductById };
 }
