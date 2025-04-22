@@ -62,6 +62,9 @@ async function main() {
         const count = decrease({ productId });
         updateProductCount({ productId, count: count });
         updateCartCount({ productId, count: count });
+        if (count === 0) {
+            removeProduct({ product: getProductById({ productId }) });
+        }
     };
 
     // + - 버튼 클릭 시
