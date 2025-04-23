@@ -24,5 +24,12 @@ export const setupCounter = () => {
         return countMap[productId];
     };
 
-    return { increase, decrease };
+    const getTotalCount = () => {
+        return Object.values(countMap).reduce((total, current) => {
+            total += current;
+            return total;
+        }, 0);
+    };
+
+    return { increase, decrease, getTotalCount };
 };
