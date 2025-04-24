@@ -17,31 +17,18 @@ function findElement(startingElement, selector) {
     return null;
 }
 
-// countMap 전달 받는 함수
-function sumAllCounts(countMap) {
-    // let sum = 0;
-    // Object.values(countMap).forEach((number) => {
-    //     sum += number;
-    // });
-    // return sum;
-
-    // reduce 사용한 방식
-    return Object.values(countMap).reduce((total, cur) => {
-        total += cur;
-        return total;
-    }, 0);
-}
-
 async function main() {
     const { updateCount: updateProductCount, getProductById } = await setupProducts({ container: document.querySelector('#products') });
     let productMap = {};
 
-    const { increase, decrease } = setupCounter();
+    const { increase, decrease, getTotalCount } = setupCounter();
 
     const { addProduct, removeProduct, updateCount: updateCartCount } = setupCart({ container: document.querySelector('.cart_items') });
 
-    // count 저장
-    const countMap = {};
+    // total count
+    const updateTotalCount = (totalCount) => {
+        document.querySelector('.total_count').innerHTML = `(${totalCount})`;
+    };
 
     // 개수증가 함수
     const increaseCount = (productId) => {
@@ -54,6 +41,7 @@ async function main() {
             addProduct({ product: getProductById({ productId }) });
         }
         updateCartCount({ productId, count: count });
+        updateTotalCount(getTotalCount());
     };
 
     // 개수감소 함수
@@ -65,6 +53,7 @@ async function main() {
         if (count === 0) {
             removeProduct({ product: getProductById({ productId }) });
         }
+        updateTotalCount(getTotalCount());
     };
 
     // + - 버튼 클릭 시
