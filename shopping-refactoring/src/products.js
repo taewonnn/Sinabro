@@ -71,6 +71,7 @@ export async function setupProducts({ container, onIncreaseClick, onDecreaseClic
     // count update
     const updateCount = ({ productId, count }) => {
         const productElement = container.querySelector(`.product[data-product-id = '${productId}']`);
+        console.log('prd', productElement);
         const cartCount = productElement.querySelector('.cart-count');
         cartCount.innerHTML = count;
         if (count === 0) {
