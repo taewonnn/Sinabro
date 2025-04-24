@@ -21,7 +21,7 @@ async function main() {
     };
 
     // 개수감소 함수
-    const onDecreaseClick = (productId) => {
+    const onDecreaseClick = ({ productId }) => {
         // counter.js 에서 미리 정의해놓은 decrease
         const count = decrease({ productId });
         updateProductCount({ productId, count: count });
