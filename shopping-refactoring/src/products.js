@@ -1,4 +1,5 @@
 import test from '/src/test.json?raw';
+import { findElement } from './util';
 
 /** 상품 정보 API */
 async function getProducts() {
@@ -30,7 +31,7 @@ export function getProductElement(product, count = 0) {
     return element;
 }
 
-export async function setupProducts({ container }) {
+export async function setupProducts({ container, onIncreaseClick, onDecreaseClick }) {
     // 데이터
     const products = await getProducts();
     const productMap = {};
@@ -41,6 +42,30 @@ export async function setupProducts({ container }) {
     products.forEach((product) => {
         const productElement = getProductElement(product);
         container.appendChild(productElement);
+    });
+
+    // + - 버튼 클릭 시
+    container.addEventListener('click', (event) => {
+        const targetElement = event.target;
+
+        // 어떤 상품에서 버튼 클릭했는지 찾기!
+        const productElement = findElement(targetElement, '.product');
+
+        // product id 가져오기
+        const productId = productElement.getAttribute('data-product-id');
+        console.log('몇 번 상품 클릭 ? :', productId);
+
+        // + - 버튼만 누르는게 아니라 이미지를 누를수도 있고 다른 것을 클릭 할 수 있으니,  + / -만 눌렀을 때로 범위 좁히기
+        if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
+            // - 눌렀을 때,
+            if (targetElement.matches('.btn-decrease')) {
+                onDecreaseClick(productId);
+
+                // + 눌렀을 때,
+            } else if (targetElement.matches('.btn-increase')) {
+                onIncreaseClick(productId);
+            }
+        }
     });
 
     // count update
