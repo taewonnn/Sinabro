@@ -6,32 +6,6 @@ import { setupProducts, getProductElement } from './products';
 import { findElement } from './util';
 
 async function main() {
-    // 개수증가 함수
-    const onIncreaseClick = (productId) => {
-        // counter.js 에서 미리 정의해놓은 increase
-        const count = increase({ productId });
-        console.log('product', getProductById({ productId }));
-
-        updateProductCount({ productId, count: count });
-        if (count === 1) {
-            addProduct({ product: getProductById({ productId }) });
-        }
-        updateCartCount({ productId, count: count });
-        updateTotalCount(getTotalCount());
-    };
-
-    // 개수감소 함수
-    const onDecreaseClick = ({ productId }) => {
-        // counter.js 에서 미리 정의해놓은 decrease
-        const count = decrease({ productId });
-        updateProductCount({ productId, count: count });
-        updateCartCount({ productId, count: count });
-        if (count === 0) {
-            removeProduct({ product: getProductById({ productId }) });
-        }
-        updateTotalCount(getTotalCount());
-    };
-
     const { updateCount: updateProductCount, getProductById } = await setupProducts({
         container: document.querySelector('#products'),
         onDecreaseClick,
@@ -47,6 +21,32 @@ async function main() {
     const updateTotalCount = (totalCount) => {
         document.querySelector('.total_count').innerHTML = `(${totalCount})`;
     };
+
+    // 개수증가 함수
+    function onIncreaseClick(productId) {
+        // counter.js 에서 미리 정의해놓은 increase
+        const count = increase({ productId });
+        console.log('product', getProductById({ productId }));
+
+        updateProductCount({ productId, count: count });
+        if (count === 1) {
+            addProduct({ product: getProductById({ productId }) });
+        }
+        updateCartCount({ productId, count: count });
+        updateTotalCount(getTotalCount());
+    }
+
+    // 개수감소 함수
+    function onDecreaseClick({ productId }) {
+        // counter.js 에서 미리 정의해놓은 decrease
+        const count = decrease({ productId });
+        updateProductCount({ productId, count: count });
+        updateCartCount({ productId, count: count });
+        if (count === 0) {
+            removeProduct({ product: getProductById({ productId }) });
+        }
+        updateTotalCount(getTotalCount());
+    }
 
     document.querySelector('.cart_items').addEventListener('click', () => {
         // 위에 #products의 코드와 동일(반복)
