@@ -3,7 +3,6 @@
 import { setupCart } from './cart';
 import { setupCounter } from './counter';
 import { setupProducts, getProductElement } from './products';
-import { findElement } from './utils';
 
 async function main() {
     const { updateCount: updateProductCount, getProductById } = await setupProducts({
@@ -11,7 +10,6 @@ async function main() {
         onDecreaseClick,
         onIncreaseClick,
     });
-    let productMap = {};
 
     const { increase, decrease, getTotalCount } = setupCounter();
 
@@ -27,7 +25,7 @@ async function main() {
     };
 
     // 개수증가 함수
-    function onIncreaseClick(productId) {
+    function onIncreaseClick({ productId }) {
         // counter.js 에서 미리 정의해놓은 increase
         const count = increase({ productId });
         // console.log('product ID', getProductById({ productId }));

@@ -59,23 +59,22 @@ export async function setupProducts({ container, onIncreaseClick, onDecreaseClic
         if (targetElement.matches('.btn-decrease') || targetElement.matches('.btn-increase')) {
             // - 눌렀을 때,
             if (targetElement.matches('.btn-decrease')) {
-                onDecreaseClick(productId);
+                onDecreaseClick({ productId });
 
                 // + 눌렀을 때,
             } else if (targetElement.matches('.btn-increase')) {
-                onIncreaseClick(productId);
+                onIncreaseClick({ productId });
             }
         }
     });
 
     // count update
     const updateCount = ({ productId, count }) => {
-        const productElement = container.querySelector(`.product[data-product-id = '${productId}']`);
-        console.log('prd', productElement);
-        const cartCount = productElement.querySelector('.cart-count');
-        cartCount.innerHTML = count;
+        const productElement = container.querySelector(`.product[data-product-id='${productId}']`);
+        const cartCountElement = productElement.querySelector('.cart-count');
+        cartCountElement.innerHTML = count;
         if (count === 0) {
-            cartCount.innerHTML = '';
+            cartCountElement.innerHTML = '';
         }
     };
 
