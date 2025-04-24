@@ -2,8 +2,6 @@ export const setupCounter = () => {
     const countMap = {};
 
     const increase = ({ productId }) => {
-        console.log('+');
-
         if (countMap[productId] === undefined) {
             countMap[productId] = 0;
         }
@@ -14,7 +12,6 @@ export const setupCounter = () => {
     };
 
     const decrease = ({ productId }) => {
-        console.log('-');
         if (countMap[productId] === undefined) {
             countMap[productId] = 0;
         }
