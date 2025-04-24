@@ -1,5 +1,5 @@
 import test from '/src/test.json?raw';
-import { findElement } from './util';
+import { findElement } from './utils';
 
 /** 상품 정보 API */
 async function getProducts() {

@@ -3,7 +3,7 @@
 import { setupCart } from './cart';
 import { setupCounter } from './counter';
 import { setupProducts, getProductElement } from './products';
-import { findElement } from './util';
+import { findElement } from './utils';
 
 async function main() {
     const { updateCount: updateProductCount, getProductById } = await setupProducts({
