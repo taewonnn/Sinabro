@@ -12,7 +12,7 @@ async function getProducts() {
 }
 
 /** 담긴 상품 HTML */
-export function getProductElement(product, count = 0) {
+export function getProductElement(product) {
     const element = document.createElement('div');
     element.classList.add('product');
     element.setAttribute('data-product-id', product.id);
@@ -23,7 +23,11 @@ export function getProductElement(product, count = 0) {
             <div class='flex items-center justify-between'>
                 <span>Price : ${product.regularPrice}</span>
                 <button type='button' class='btn-decrease disabled:cursor-not-allowed disabled:opacity-50 bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>-</button>
-                <span class='cart-count text-green-800'>${count === 0 ? '' : count}</span>
+                <span 
+                    class='cart-count text-green-800'
+                    data-subscribe-to="countMap"
+                >
+                </span>
                 <button type='button' class='btn-increase bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>+</button>
             </div>
         </div>
