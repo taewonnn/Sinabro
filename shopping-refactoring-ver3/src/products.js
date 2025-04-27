@@ -26,6 +26,7 @@ export function getProductElement(product) {
                 <span 
                     class='cart-count text-green-800'
                     data-subscribe-to="countMap"
+                    data-subscription-path="${product.id}"
                 >
                 </span>
                 <button type='button' class='btn-increase bg-green-200 hover:bg-green-300 text-green-800 px-4 py-1 rounded-full'>+</button>
