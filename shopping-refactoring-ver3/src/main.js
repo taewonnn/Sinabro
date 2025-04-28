@@ -30,7 +30,7 @@ async function main() {
         const count = increase({ productId });
         // console.log('product ID', getProductById({ productId }));
 
-        updateProductCount({ productId, count: count });
+        // updateProductCount({ productId, count: count });
         if (count === 1) {
             addProduct({ product: getProductById({ productId }) });
         }
@@ -43,7 +43,7 @@ async function main() {
         // counter.js 에서 미리 정의해놓은 decrease
         const count = decrease({ productId });
 
-        updateProductCount({ productId, count: count });
+        // updateProductCount({ productId, count: count });
         updateCartCount({ productId, count: count });
         if (count === 0) {
             removeProduct({ product: getProductById({ productId }) });

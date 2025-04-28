@@ -1,8 +1,11 @@
 export const setupCounter = () => {
-    // const countMap = {};
-
     // React - useState
-    const [countMap, setCountMap] = bindReactiveState({ name: 'countMap', defaultValue: {} });
+    // const [countMap, setCountMap] = bindReactiveState({ name: 'countMap', defaultValue: {} });
+
+    let countMap = {};
+    const setCountMap = (newCountMap) => {
+        countMap = newCountMap;
+    };
 
     const increase = ({ productId }) => {
         const newCountMap = { ...countMap };
