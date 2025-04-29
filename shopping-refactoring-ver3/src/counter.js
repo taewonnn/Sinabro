@@ -38,5 +38,9 @@ export const setupCounter = () => {
         }, 0);
     };
 
-    return { increase, decrease, getTotalCount };
+    const getCountByProductId = ({ productId }) => {
+        return getCountMap()[productId] || 0;
+    };
+
+    return { increase, decrease, getTotalCount, getCountByProductId };
 };

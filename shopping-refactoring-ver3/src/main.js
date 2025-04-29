@@ -11,7 +11,7 @@ async function main() {
         onIncreaseClick,
     });
 
-    const { increase, decrease, getTotalCount } = setupCounter();
+    const { increase, decrease, getTotalCount, getCountByProductId } = setupCounter();
 
     const {
         addProduct,
@@ -26,15 +26,10 @@ async function main() {
 
     // 개수증가 함수
     function onIncreaseClick({ productId }) {
-        // counter.js 에서 미리 정의해놓은 increase
-        const count = increase({ productId });
-        // console.log('product ID', getProductById({ productId }));
-
-        // updateProductCount({ productId, count: count });
-        if (count === 1) {
+        if (getCountByProductId({ productId }) == 0) {
             addProduct({ product: getProductById({ productId }) });
         }
-        updateCartCount({ productId, count: count });
+
         updateTotalCount(getTotalCount());
     }
 
@@ -43,8 +38,6 @@ async function main() {
         // counter.js 에서 미리 정의해놓은 decrease
         const count = decrease({ productId });
 
-        // updateProductCount({ productId, count: count });
-        updateCartCount({ productId, count: count });
         if (count === 0) {
             removeProduct({ product: getProductById({ productId }) });
         }
