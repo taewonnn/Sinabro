@@ -3,8 +3,11 @@ import cors from 'cors';
 const app = express();
 const port = 3000;
 
-localhost: 3000 / app.use(express.static('dist'));
 // app.use(express.static('public'));
+
+//localhost:300/index.html
+//localhost:300/assets/index-a0aaa8b4.js
+localhost: 3000 / app.use(express.static('dist'));
 
 // Cross Origin Resource Sharing
 app.use(cors());
