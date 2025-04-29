@@ -29,7 +29,11 @@ export function bindReactiveState({ name, defaultValue }) {
             }
         });
 
-        changedKeys.forEach((key) => {
+        // 중복 방지 -> set 으로 중복 제거 후 다시 Array.from으로 arr
+        // Array.from(new Set())
+        const uniqueChangedKeys = Array.from(new Set(changedKeys));
+        console.log('💡 uniqueChangedKeys', uniqueChangedKeys);
+        uniqueChangedKeys.forEach((key) => {
             const elements = Array.from(document.querySelectorAll(`[data-subscribe-to='${name}'][data-subscription-path='${key}']`));
 
             elements.forEach((element) => {
