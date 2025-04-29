@@ -5,6 +5,8 @@ const port = 3000;
 
 localhost: 3000 / app.use(express.static('dist'));
 // app.use(express.static('public'));
+
+// Cross Origin Resource Sharing
 app.use(cors());
 
 app.get('/', (req, res) => {
@@ -12,7 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/test', (req, res) => {
-    res.json({ name: 'Eunjae' });
+    res.json({ name: 'taeown', age: 32 });
 });
 
 app.listen(port, () => {
