@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { posts } from './data';
 
 describe('filter method - simple', () => {
+    // it.only -> 해당 부분만 테스트 결과 확인 가능
     it('gets positive numbers', () => {
         const numbers = [1, -2, 3, -4, 5];
 
@@ -80,7 +81,7 @@ describe('filter method - real world', () => {
         expect(postsWithCultureTag.length).toBe(16);
     });
 
-    it.only('gets tweets posted after 10pm', () => {
+    it('gets tweets posted after 10pm', () => {
         // hint:
         // new Date('2023-02-03T21:10:00.000Z').toLocaleString('fr-FR')
 
