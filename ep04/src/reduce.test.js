@@ -121,18 +121,50 @@ describe('reduce method', () => {
     });
 });
 
-function solution(t, p) {
-    const pLen = p.length;
-    const limit = +p;
+// Reduce
 
-    return t
-        .split('')
-        .map((_, idx, arr) => {
-            if (idx > arr.length - pLen) return null;
-            const numStr = arr.slice(idx, idx + pLen).join('');
-            return Number(numStr);
-        })
-        .filter((num) => num !== null && num <= limit).length;
-}
+// Ex1 - 그룹핑
+const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
 
+fruits.reduce((acc, fr) => {
+    const prevCount = acc[fr] | 0;
 
+    acc[fr] = prevCount + 1;
+    return acc;
+}, {});
+
+// Ex2
+const orders = [
+    { id: 1, date: '2025-05-01' },
+    { id: 2, date: '2025-05-02' },
+    { id: 3, date: '2025-05-01' },
+    { id: 4, date: '2025-05-03' },
+    { id: 5, date: '2025-05-02' },
+];
+
+// Return
+// → { "2025-05-01": 2, "2025-05-02": 2, "2025-05-03": 1 }
+
+orders.reduce((acc, item) => {
+    const prev = acc[item.date] || 0;
+
+    acc[item.date] = prev + 1;
+
+    return acc;
+}, {});
+
+// Ex3
+const posts = [
+    { title: 'JS 기초', tags: ['js', 'frontend'] },
+    { title: 'React 시작', tags: ['react', 'frontend'] },
+    { title: 'Node.js 서버', tags: ['node', 'backend'] },
+    { title: 'CSS 애니메이션', tags: ['css', 'frontend'] },
+];
+// → {
+//   js:       ["JS 기초"],
+//   frontend: ["JS 기초", "React 시작", "CSS 애니메이션"],
+//   react:    ["React 시작"],
+//   node:     ["Node.js 서버"],
+//   backend:  ["Node.js 서버"],
+//   css:      ["CSS 애니메이션"]
+// }
