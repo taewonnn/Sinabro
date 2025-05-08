@@ -61,9 +61,22 @@ describe('reduce method', () => {
         });
     });
 
-    it.only('groups by key (2)', () => {
+    it('groups by key (2)', () => {
         // TODO: do something with `shows` here
-        const groupedShows = [];
+        const groupedShows = shows.reduce((result, show) => {
+            // findIndex -> 존재하지않으면 -1 return
+            const index = result.findIndex((resultShow) => resultShow.genre === show.genre);
+
+            if (index === -1) {
+                result.push({
+                    genre: show.genre,
+                    titles: [show.title],
+                });
+            } else {
+                result[index].titles.push(show.title);
+            }
+            return result;
+        }, []);
         expect(groupedShows).toEqual([
             {
                 genre: 'Drama',
@@ -92,13 +105,20 @@ describe('reduce method', () => {
         ];
 
         // TODO: do something here
-        const flatArray = [];
+        const flatArray = nestedArray.reduce((res, item) => {
+            //
+            res.push(...item);
+            return res;
+        }, []);
         expect(flatArray).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
 
-    it('extracts writer names', () => {
+    it.only('extracts writer names', () => {
         // TODO: do something with `shows` here
-        const writerNames = [];
+        const writerNames = shows.reduce((acc, item) => {
+            acc.push(...item.writers);
+            return acc;
+        }, []);
         expect(writerNames).toEqual([
             'Matt Duffer',
             'Ross Duffer',
