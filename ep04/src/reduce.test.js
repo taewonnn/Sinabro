@@ -154,12 +154,14 @@ orders.reduce((acc, item) => {
 }, {});
 
 // Ex3
+// 블로그 게시글 배열에서, 태그 배열(tags)을 순회하며 각 태그별로 게시글 제목(title)을 모아 보세요.
 const posts = [
     { title: 'JS 기초', tags: ['js', 'frontend'] },
     { title: 'React 시작', tags: ['react', 'frontend'] },
     { title: 'Node.js 서버', tags: ['node', 'backend'] },
     { title: 'CSS 애니메이션', tags: ['css', 'frontend'] },
 ];
+
 // → {
 //   js:       ["JS 기초"],
 //   frontend: ["JS 기초", "React 시작", "CSS 애니메이션"],
@@ -168,3 +170,14 @@ const posts = [
 //   backend:  ["Node.js 서버"],
 //   css:      ["CSS 애니메이션"]
 // }
+
+posts.reduce((acc, item) => {
+    item.tags.forEach((tag) => {
+        const prev = acc[tag] || [];
+        const next = [...prev, item.title];
+
+        acc[tag] = next;
+    });
+
+    return acc;
+}, {});
