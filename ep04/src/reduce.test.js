@@ -114,11 +114,18 @@ describe('reduce method', () => {
     });
 
     it.only('extracts writer names', () => {
-        // TODO: do something with `shows` here
+        // reduce 사용한 경우
         const writerNames = shows.reduce((acc, item) => {
             acc.push(...item.writers);
             return acc;
         }, []);
+
+        // reduce 없이 사용 하는 경우
+        const writerNames2 = [];
+        shows.forEach((show) => {
+            writerNames2.push(...show.writers);
+        });
+
         expect(writerNames).toEqual([
             'Matt Duffer',
             'Ross Duffer',
