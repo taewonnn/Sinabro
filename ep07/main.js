@@ -4,6 +4,11 @@ const routes = {
     '/search': renderSearch,
 };
 
+// popstate event - 뒤로갈 때 stack에서 뺄 때
+window.addEventListener('popstate', (e) => {
+    console.log('popstate Event!!', e);
+});
+
 // page 이동
 const goto = (url) => {
     const pathname = url.split('?')[0];
