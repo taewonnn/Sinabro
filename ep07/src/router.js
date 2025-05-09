@@ -30,6 +30,7 @@ export const goto = (url, { push } = {}) => {
     location.href = url;
 };
 
+// 라우터 기능 페이지 이동
 export const start = (params) => {
     routes = params.routes;
     goto(location.pathname + location.search);
