@@ -5,7 +5,12 @@ import movies from './movie.json' assert { type: 'json' };
 
 const app = express();
 const port = 3000;
+
+// cors
 app.use(cors());
+
+// static 파일 서빙
+app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
     res.send('Hello node!');
