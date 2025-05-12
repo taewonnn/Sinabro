@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import movies from './movie.json' assert { type: 'json' };
 import fs from 'fs';
+import { getInitialHTML } from './dist/index.js';
 
 const app = express();
 const port = 3000;
@@ -14,8 +15,8 @@ app.use(cors());
 app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
-    fs.readFile('dist/main.html', (err, file) => {
-        res.send(file.toString());
+    fs.readFile('index.html', (err, file) => {
+        res.send(file.toString().replace('<!--app-->', getInitialHTML['/']));
     });
 });
 

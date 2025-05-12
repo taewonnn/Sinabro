@@ -1,15 +1,9 @@
 let routes;
 
 // popstate event - 뒤로갈 때 stack에서 뺄 때
-window.addEventListener('popstate', (e) => {
-    console.log('popstate Event!!', e);
-
-    if (routes[location.pathname]) {
-        console.log('!!', routes[location.pathname]());
-        routes[location.pathname](); // 함수 호출
-        return;
-    }
-});
+// window.addEventListener('popstate', (e) => {
+//     console.log('popstate Event!!', e);
+// });
 
 // page 이동
 export const goto = (url, { push } = {}) => {
@@ -33,5 +27,12 @@ export const goto = (url, { push } = {}) => {
 // 라우터 기능 페이지 이동
 export const start = (params) => {
     routes = params.routes;
+
+    if (routes[location.pathname]) {
+        console.log('!!', routes[location.pathname]());
+        routes[location.pathname](); // 함수 호출
+        return;
+    }
+
     goto(location.pathname + location.search);
 };
