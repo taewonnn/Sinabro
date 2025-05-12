@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 
+// vite.config.js
 export default {
     build: {
         minify: false,

@@ -1,4 +1,4 @@
-import { renderIndex, getInitialHTML as getInitialHTMLForIndex } from './pages';
+import { renderIndex, getInitialHTML as getInitialHTMLForIndex } from './pages/index';
 import { renderSearch, getInitialHTML as getInitialHTMLForSearch } from './pages/search';
 
 export const routes = {

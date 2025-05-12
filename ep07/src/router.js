@@ -7,7 +7,7 @@ let routes;
 
 // page 이동
 export const goto = (url, { push } = {}) => {
-    const pathname = url.split('?')[0];
+    const pathname = url.split('?')[0]; // "/" | "/search" | ...
 
     // query 가져오기
     const param = Object.fromEntries(new URLSearchParams(url.split('?')[1]));
@@ -28,11 +28,15 @@ export const goto = (url, { push } = {}) => {
 export const start = (params) => {
     routes = params.routes;
 
-    if (routes[location.pathname]) {
-        console.log('!!', routes[location.pathname]());
-        routes[location.pathname](); // 함수 호출
-        return;
-    }
+    window.addEventListener('popstate', (event) => {
+        goto(location.pathname + location.search);
+    });
+
+    // if (routes[location.pathname]) {
+    //     console.log('!!', routes[location.pathname]());
+    //     routes[location.pathname](); // 함수 호출
+    //     return;
+    // }
 
     goto(location.pathname + location.search);
 };
