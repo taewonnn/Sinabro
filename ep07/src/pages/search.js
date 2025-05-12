@@ -1,8 +1,4 @@
 export async function renderSearch({ searchParams }) {
-    // console.log(searchParams);
-
-    // searchParams.query
-
     document.querySelector('#app').innerHTML = `
         <h1>Search Result</h1>
         <p>Search for:${searchParams.query}...</p>

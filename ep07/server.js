@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import movies from './movie.json' assert { type: 'json' };
+import fs from 'fs';
 
 const app = express();
 const port = 3000;
@@ -13,7 +14,9 @@ app.use(cors());
 app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
-    res.send('Hello node!');
+    fs.readFile('dist/main.html', (err, file) => {
+        res.send(file.toString());
+    });
 });
 
 app.listen(port, () => {
