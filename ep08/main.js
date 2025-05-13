@@ -1,5 +1,3 @@
-console.log('async');
-
 // fetch - await 없이
 // const restest = fetch('https://jsonplaceholder.typicode.com/todos/');
 // console.log({ restest });
@@ -37,45 +35,66 @@ console.log('async');
 // }
 
 async function getTodo(id) {
+    await Promise.resolve();
+    if (id === 2) {
+        throw new Error(`error getting todo for ${id}`);
+    }
     return fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
 }
 
-console.log('getTodo1', getTodo(1), '!!', await getTodo(1));
+// console.log('getTodo1', getTodo(1), '!!', await getTodo(1));
 
 // todo - 1
 const res = await getTodo(1);
 const json = await res.json(); // json()함수도 promise를 return하기에 await을 붙여
 
-console.log('json', json);
+// console.log('json', json);
 
 // todo - 2
 const res2 = await getTodo(2);
 const json2 = await res2.json(); // json()함수도 promise를 return하기에 await을 붙여
 
-console.log('json2', json2);
+// console.log('json2', json2);
 
 // todo - 3
 const res3 = await getTodo(3);
 const json3 = await res3.json(); // json()함수도 promise를 return하기에 await을 붙여
 
-console.log('json3', json3);
+// console.log('json3', json3);
 
 // 한 번에 받고 싶을 떄, Prmomise.all([])
 // 만약 각각 await해서 리턴한다면 1은 1초 2는 2초 3은 3초가 걸린다고 치면 총 6초가 걸림
 // 하지만 promise.all을 사용한다면 3초만에 3개를 모두 가져옴
+// 모든 promise들이 성공해야만 가능(하나라도 reject가 있으면 중단하고 에러 return)
 const promise1 = getTodo(1);
 const promise2 = getTodo(2);
 const promise3 = getTodo(3);
 
-const allRes = await Promise.all([promise1, promise2, promise3]);
-console.log({ allRes }); // {allRes: Array(3)}
+// try {
+//     const allRes = await Promise.all([promise1, promise2, promise3]);
+//     console.log({ allRes }); // {allRes: Array(3)}
+// } catch (e) {
+//     console.log('prmise All error ', e);
+// }
+
+// Promise.allSetteled
+// 모든 요청들이 성공했나 실패했나
+try {
+    const allRes2 = await Promise.allSettled([promise1, promise2, promise3]);
+    console.log('settled', allRes2);
+} catch (e) {
+    console.log('Error Here! ', e);
+}
 
 // json
-const jsonPromise1 = allRes[0].json();
-const jsonPromise2 = allRes[1].json();
-const jsonPromise3 = allRes[2].json();
+// const jsonPromise1 = allRes[0].json();
+// const jsonPromise2 = allRes[1].json();
+// const jsonPromise3 = allRes[2].json();
 
-const allJsons = await Promise.all([jsonPromise1, jsonPromise2, jsonPromise3]);
-console.log('alljsons', { allJsons });
+// const allJsons = await Promise.all([jsonPromise1, jsonPromise2, jsonPromise3]);
+// console.log('alljsons', { allJsons });
 
 // refactoring
+// 위에 각각 세개를 한 번에
+// const jsons = await Promise.all(allRes.map((res) => res.json()));
+// console.log({ jsons });
