@@ -4,6 +4,7 @@ export default {
         pages: 'pages',
         dist: 'dist',
         contenstsSlug: 'post',
+        assets: 'assets',
     },
     site: { title: 'My Blog!!!', author: 'taewon' },
     updatePost(post) {
