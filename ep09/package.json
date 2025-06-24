@@ -16,7 +16,7 @@
         "fs-extra": "^11.3.0",
         "mustache": "^4.2.0",
         "showdown": "^2.1.0",
-        "static-server": "^2.2.1"
+        "static-server": "^3.0.0"
     },
     "dependencies": {
         "front-matter": "^4.0.2"

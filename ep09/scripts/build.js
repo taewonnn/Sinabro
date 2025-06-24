@@ -22,7 +22,7 @@ async function getRecentPosts() {
     const files = await fs.readdir(CONTENTS);
 
     const result = [];
-    for (const file of files) {
+for (const file of files) {
         const { attributes } = frontMatter((await fs.readFile(`${CONTENTS}/${file}/index.md`)).toString());
         result.push({ ...attributes, path: `/${CONTENTS_SLUG}/${attributes.slug}` });
     }
