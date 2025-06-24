@@ -27,6 +27,7 @@
         "estree-util-value-to-estree": "^3.3.3",
         "path-to-regexp": "^8.0.1",
         "semver": "^7.6.0",
-        "pac-resolver": "^7.0.1"
+        "pac-resolver": "^7.0.1",
+        "undici": "^7.2.3"
     }
 }
